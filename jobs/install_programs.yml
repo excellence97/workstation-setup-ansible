@@ -3,17 +3,6 @@
   hosts: localhost
   become: yes
   tasks:
-    - name: Ensure Snapd is installed and running
-      ansible.builtin.package:
-        name: snapd
-        state: present
-
-    - name: Ensure Snapd service is started
-      ansible.builtin.systemd:
-        name: snapd
-        state: started
-        enabled: yes
-
     - name: Install Firefox via Snap
       ansible.builtin.command:
         cmd: snap install firefox
