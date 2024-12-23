@@ -1,0 +1,19 @@
+---
+- name: Ensure Snapd is installed, enabled, and running
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure Snapd is installed
+      ansible.builtin.package:
+        name: snapd
+        state: present
+
+    - name: Enable the Snapd service
+      ansible.builtin.systemd:
+        name: snapd
+        enabled: yes
+
+    - name: Start the Snapd service
+      ansible.builtin.systemd:
+        name: snapd
+        state: started

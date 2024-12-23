@@ -1,0 +1,54 @@
+---
+- name: Install various apps using Snap
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure Snapd is installed and running
+      ansible.builtin.package:
+        name: snapd
+        state: present
+
+    - name: Ensure Snapd service is started
+      ansible.builtin.systemd:
+        name: snapd
+        state: started
+        enabled: yes
+
+    - name: Install Firefox via Snap
+      ansible.builtin.command:
+        cmd: snap install firefox
+      register: firefox_install
+      changed_when: "'installed' in firefox_install.stdout"
+
+    - name: Install Visual Studio Code via Snap
+      ansible.builtin.command:
+        cmd: snap install code --classic
+      register: vscode_install
+      changed_when: "'installed' in vscode_install.stdout"
+
+    - name: Install GoLang via Snap
+      ansible.builtin.command:
+        cmd: snap install go --classic
+      register: golang_install
+      changed_when: "'installed' in golang_install.stdout"
+
+    - name: Install Chromium via Snap
+      ansible.builtin.command:
+        cmd: snap install chromium
+      register: chromium_install
+      changed_when: "'installed' in chromium_install.stdout"
+    - 
+      name: Install CDiscord via Snap
+      ansible.builtin.command:
+        cmd: snap install discord
+      register: discord_install
+      changed_when: "'installed' in discord_install.stdout"
+
+    - name: Ensure successful installation of all software
+      ansible.builtin.debug:
+        msg:
+          - "Firefox installation status: {{ firefox_install.stdout | default('Not available') }}"
+          - "Visual Studio Code installation status: {{ vscode_install.stdout | default('Not available') }}"
+          - "GoLang installation status: {{ golang_install.stdout | default('Not available') }}"
+          - "Chromium installation status: {{ chromium_install.stdout | default('Not available') }}"
+          - "Discord installation status: {{ discord_install.stdout | default('Not available') }}"

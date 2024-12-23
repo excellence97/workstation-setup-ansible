@@ -1,0 +1,14 @@
+---
+- name: Update and upgrade the system using DNF
+  hosts: localhost
+  tasks:
+    - name: Update DNF package metadata
+      ansible.builtin.dnf:
+        update_cache: yes
+      become: yes
+
+    - name: Upgrade all packages to the latest version
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+      become: yes
