@@ -1,4 +1,5 @@
 ---
 - import_playbook: jobs/update_system.yml
+- import_playbook: jobs/link_snap.yml
 - import_playbook: jobs/enable_snapd.yml
 - import_playbook: jobs/install_programs.yml
